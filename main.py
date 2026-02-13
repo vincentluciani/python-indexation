@@ -11,11 +11,23 @@ if __name__ == "__main__":
         "child_tag": "loc"
     }
     
-    for item in parse_stream_from_url(url,decompressor,parser,parsing_args):
+    for url_to_parse in parse_stream_from_url(url,decompressor,parser,parsing_args):
         print("======")
-        print(item)
-   
+        if "tutorial" in url_to_parse:
+            print("Found tutorial URL:", url_to_parse)
+            decompressor = get_decompressor('none')
+            parser = get_parser('html_tables')
+            parsing_args = {
+                "title_tag":"h2"
+            }
+            for item in parse_stream_from_url(url_to_parse,decompressor,parser,parsing_args):
+                print("======")
+                print(item)
 
+
+    
+
+    
 
     
 
