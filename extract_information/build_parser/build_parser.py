@@ -1,6 +1,6 @@
-from parse_stream_from_url.build_parser.parsers.xml_parser import parse_xml
+from extract_information.build_parser.parsers.xml_parser import parse_xml
 
-def build_parser(parser_name):
+def get_parser(parser_name):
     registry = {
         "xml": parse_xml,
         "none": return_input
