@@ -24,7 +24,7 @@ def parse_html_tables(stream,parsing_args):
         for row in rows:
             cols = row.xpath("./td")
             results.append({
-                "title": category,
+                "table_title": category,
                 "columns_values": [cols[i].text_content().strip() for i in range(len(cols))]
             })
 
