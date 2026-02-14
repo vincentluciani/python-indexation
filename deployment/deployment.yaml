@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-indexation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-indexation
+  template:
+    metadata:
+      labels:
+        app: python-indexation
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: python-indexation
+          image: vluciani/node-search-app:python-indexation-1.2
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
