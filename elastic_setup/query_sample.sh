@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ES_HOST="http://localhost:9200"
+ES_HOST="http://elasticsearch:9200"
 INDEX="vince"
 TERM="array"
 SIZE=10

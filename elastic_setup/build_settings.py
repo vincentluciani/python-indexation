@@ -4,7 +4,7 @@ from execute_http import  execute_http_request
 
 user = os.getenv("ELASTIC_USER")
 password = os.getenv("ELASTIC_PASSWORD")
-URL = "http://localhost:9200/vince"
+URL = "http://elasticsearch:9200/vince"
 headers = {'Content-Type': 'application/json'}
 body ={
           "settings": {

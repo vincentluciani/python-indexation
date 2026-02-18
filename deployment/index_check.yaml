@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: es-init-index
+  name: es-check-index
 spec:
   template:
     spec:
       containers:
       - name: init-index
         image: vluciani/node-search-app:python-indexation-1.8
-        command: ["python", "elastic_setup/build_settings.py"]
+        command: ["python", "elastic_setup/check_settings.py"]
         env:
         - name: ELASTIC_USER
           value: "elastic" 

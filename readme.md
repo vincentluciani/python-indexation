@@ -9,6 +9,8 @@ kubectl port-forward deployment/elasticsearch 9200:9200
 
 Elastic search pod must be running
 
+# TODO: to be able to test the python scripts out of pod, you need to be able to replace elasticsearch by localhost
+
 export ELASTIC_USER=...
 export ELASTIC_PASSWORD="..."
 
@@ -34,13 +36,14 @@ image in deployment.yaml must have the right version!
 
 (if necessary:
 kubectl get jobs
-kubectl delete job es-init-index)
+kubectl delete job es-init-index
+kubectl delete job es-check-index
 
-
+kubectl apply -f deployment/python_environment.yaml
 kubectl apply -f deployment/create_index.yaml
 
-kubectl apply -f deployment/deployment.yaml
-
+# To test with Thunder client, do not forget about port forwarding
+kubectl port-forward deployment/elasticsearch 9200:9200
 
 
 #TODO: transform check_settings in python and integrate in create index deployment, try create index deployment
