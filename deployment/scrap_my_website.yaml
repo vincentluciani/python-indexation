@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: es-check-index
+  name: es-scrap-website
 spec:
   template:
     spec:
       containers:
-      - name: init-index
+      - name: scrap-website
         image: vluciani/node-search-app:python-indexation-1.11
-        command: ["python", "elastic_setup/check_settings.py"]
+        command: ["python", "main.py"]
         env:
         - name: ELASTICSEARCH_URL
           value: "http://elasticsearch:9200"

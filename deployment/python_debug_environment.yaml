@@ -16,7 +16,8 @@ spec:
         - name: regcred
       containers:
         - name: python-indexation
-          image: vluciani/node-search-app:python-indexation-1.8
+          image: vluciani/node-search-app:python-indexation-1.11
+          command: ["/bin/sh", "-c", "sleep infinity"]
           resources:
             requests:
               memory: "128Mi"

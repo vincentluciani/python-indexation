@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: init-index
-        image: vluciani/node-search-app:python-indexation-1.8
+        image: vluciani/node-search-app:python-indexation-1.11
         command: ["python", "elastic_setup/build_settings.py"]
         env:
         - name: ELASTICSEARCH_URL

@@ -37,10 +37,15 @@ image in deployment.yaml must have the right version!
 kubectl get jobs
 kubectl delete job es-init-index
 kubectl delete job es-check-index
+kubectl delete job es-check-scrapping
 
-kubectl apply -f deployment/python_environment.yaml
 kubectl apply -f deployment/create_index.yaml
-
+kubectl apply -f deployment/check_index.yaml
+kubectl apply -f deployment/scrap_my_website.yaml
+kubectl apply -f deployment/verify_scrapping.yaml
+kubectl get pods
+Check for the pod name starting with es-check-index-
+kubectl logs <pod-name>
 # To test with Thunder client, do not forget about port forwarding
 kubectl port-forward deployment/elasticsearch 9200:9200
 
@@ -52,3 +57,6 @@ kubectl get pods
 
 kubectl logs <pod-name>
 
+To check interactively inside the image of the python environment:
+kubectl apply -f deployment/python_debug_environment.yaml
+kubectl exec -it <pod-name> -- /bin/bash
