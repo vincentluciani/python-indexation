@@ -2,6 +2,7 @@ from unicodedata import category
 from extract_information.build_decompressor.build_decompressor import get_decompressor
 from extract_information.build_parser.build_parser import get_parser
 from extract_information.parse_stream_from_url import parse_stream_from_url
+from send_information.data_senders.send_data_to_elastic import send_list_of_documents_to_elastic
 
 if __name__ == "__main__":
     url = "https://www.vincent-luciani.com/sitemap.xml.gz"
@@ -35,6 +36,8 @@ if __name__ == "__main__":
             number_of_rows = sum(len(item) for item in resulting_learning_table)
             print(f"url: {url_to_parse}")
             print(f"Total number of rows in the resulting learning table: {number_of_rows}")
+            send_list_of_documents_to_elastic(resulting_learning_table[0], "vince")
+
 
 
     

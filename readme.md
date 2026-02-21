@@ -9,10 +9,9 @@ kubectl port-forward deployment/elasticsearch 9200:9200
 
 Elastic search pod must be running
 
-# TODO: to be able to test the python scripts out of pod, you need to be able to replace elasticsearch by localhost
-
-export ELASTIC_USER=...
 export ELASTIC_PASSWORD="..."
+ELASTICSEARCH_URL : no need to set, default is http://localhost:9200
+ELASTIC_USER : no need to set, default is elastic
 
 # Build 
 docker desktop must be running ;)

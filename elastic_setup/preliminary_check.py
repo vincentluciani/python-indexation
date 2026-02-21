@@ -2,9 +2,9 @@ import os
 
 from execute_http import execute_http_request, print_response
 
-user = os.getenv("ELASTIC_USER")
+user =  os.getenv("ELASTIC_USER","elastic")
 password = os.getenv("ELASTIC_PASSWORD")
-URL = "http://elasticsearch:9200"
+URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
 headers = {'Content-Type': 'application/json'}
 
 print("==========> Checking Elasticsearch cluster health...")

@@ -23,9 +23,19 @@ def parse_html_tables(stream,parsing_args):
 
         for row in rows:
             cols = row.xpath("./td")
+            column_values = []
+    
+            for col in cols:
+                # Find all <br> tags within the cell and replace them with a newline
+                for br in col.xpath(".//br"):
+                    br.tail = "\n" + (br.tail or "")
+                    
+                # Extract text; text_content() will now include the newlines we added
+                column_values.append(col.text_content().strip())
+
             results.append({
                 "table_title": category,
-                "columns_values": [cols[i].text_content().strip() for i in range(len(cols))]
+                "columns_values": column_values
             })
 
     yield results
