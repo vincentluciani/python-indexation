@@ -27,8 +27,12 @@ if __name__ == "__main__":
         "You are a lead strategist. Merge the following lists of feature requests "
         "into one master list. Remove any duplicates and combine similar points."
     )
+    print("calling summarize_with_ai...")
     test = summarize_with_ai(model, list_of_suggestions, map_prompt, list_prefix)
-    
+    print(f"Success! Result length: {len(test)}")
+    print("======")
+    print(test)
+
     # url = "https://www.vincent-luciani.com/sitemap.xml.gz"
     # decompressor = get_decompressor('gzip')
     # parser = get_parser('xml')
