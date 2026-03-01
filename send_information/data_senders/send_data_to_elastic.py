@@ -29,7 +29,8 @@ def send_data_to_elastic(input_data, index_name):
 def build_bulk_upload_entry(list_of_value_pairs, index_name):
     final_bulk_data = ""
     for document in list_of_value_pairs:
-        value_pair_json = { key: json.dumps(value) for key, value in document.items() }
+        # TODO: json dumps is adding quotes around quotes. Causing problems 
+        value_pair_json = { key: value for key, value in document.items() }
         header = f'{{"index":{{"_index":"{index_name}"}}}}\n'
         final_bulk_data += f'{header}{json.dumps(value_pair_json)}\n'
     return final_bulk_data

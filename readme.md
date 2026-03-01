@@ -37,7 +37,9 @@ image in deployment.yaml must have the right version!
 kubectl get jobs
 kubectl delete job es-init-index
 kubectl delete job es-check-index
+kubectl delete job es-scrap-website
 kubectl delete job es-check-scrapping
+kubectl delete job es-delete-index
 
 kubectl apply -f deployment/create_index.yaml
 kubectl apply -f deployment/check_index.yaml
@@ -60,3 +62,6 @@ kubectl logs <pod-name>
 To check interactively inside the image of the python environment:
 kubectl apply -f deployment/python_debug_environment.yaml
 kubectl exec -it <pod-name> -- /bin/bash
+
+
+ollama run phi3:mini
