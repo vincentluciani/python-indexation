@@ -6,11 +6,13 @@ from send_information.data_senders.send_data_to_elastic import send_list_of_docu
 from extract_information.parse_stream_from_file import parse_stream_from_file
 from transform_information.transform_with_ai import summarize_with_ai
 
+# TODO ASK ABOUT READING CSV WITH STREAM
+
+
 if __name__ == "__main__":
-    decompressor = get_decompressor('none')
-    parser = get_parser('csv')
+    
     list_of_suggestions = []
-    for parsed_element in parse_stream_from_file("test/test_files/csv_input.csv", decompressor, parser, {}):
+    for parsed_element in parse_stream_from_file("test/test_files/csv_input.csv", 'none', 'csv', {}):
         print(parsed_element)
         list_of_suggestions.extend(parsed_element) # Assuming the suggestions are in the first column of the CSV
 
@@ -34,24 +36,20 @@ if __name__ == "__main__":
     print(test)
 
     # url = "https://www.vincent-luciani.com/sitemap.xml.gz"
-    # decompressor = get_decompressor('gzip')
-    # parser = get_parser('xml')
     # parsing_args = {
     #     "parent_tag": "url",
     #     "child_tag": "loc"
     # }
     
-    # for url_to_parse in parse_stream_from_url(url,decompressor,parser,parsing_args):
+    # for url_to_parse in parse_stream_from_url(url,"gzip","xml",parsing_args):
     #     print("======")
     #     resulting_learning_table = []
     #     if "tutorial" in url_to_parse:
     #         print("Found tutorial URL:", url_to_parse)
-    #         decompressor = get_decompressor('none')
-    #         parser = get_parser('html_tables')
     #         parsing_args = {
     #             "title_tag":"h2"
     #         }
-    #         for item in parse_stream_from_url(url_to_parse,decompressor,parser,parsing_args):
+    #         for item in parse_stream_from_url(url_to_parse,"none","html_tables",parsing_args):
     #             transformed_item = [
     #             {
     #                 'category': url_to_parse.split("/")[3], # Assuming the category is the 4th segment of the URL
