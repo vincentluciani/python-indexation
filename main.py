@@ -6,8 +6,6 @@ from send_information.data_senders.send_data_to_elastic import send_list_of_docu
 from extract_information.parse_stream_from_file import parse_stream_from_file
 from transform_information.transform_with_ai import summarize_with_ai
 
-# TODO ASK ABOUT READING CSV WITH STREAM
-
 
 if __name__ == "__main__":
     
