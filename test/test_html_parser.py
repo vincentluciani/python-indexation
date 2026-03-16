@@ -1,9 +1,9 @@
 import pytest
 from io import BytesIO
-from extract_information.build_parser.parsers.html_parser import parse_html_tables
+from extract_information.build_parser.parsers.html_parser import parse_html_tables_with_titles
 
 
-def test_parse_html_tables_basic():
+def test_parse_html_tables_with_titles_basic():
     """Test basic HTML table parsing functionality"""
     html_content = b"""
     <html>
@@ -23,7 +23,7 @@ def test_parse_html_tables_basic():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -43,7 +43,7 @@ def test_parse_html_tables_basic():
     assert result == [expected]
 
 
-def test_parse_html_tables_with_br_tags():
+def test_parse_html_tables_with_titles_with_br_tags():
     """Test parsing HTML tables with <br> tags in cells"""
     html_content = b"""
     <html>
@@ -58,7 +58,7 @@ def test_parse_html_tables_with_br_tags():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -74,7 +74,7 @@ def test_parse_html_tables_with_br_tags():
     assert result == [expected]
 
 
-def test_parse_html_tables_empty_table():
+def test_parse_html_tables_with_titles_empty_table():
     """Test parsing HTML with empty table"""
     html_content = b"""
     <html>
@@ -87,12 +87,12 @@ def test_parse_html_tables_empty_table():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     assert result == [[]]
 
 
-def test_parse_html_tables_no_table_after_title():
+def test_parse_html_tables_with_titles_no_table_after_title():
     """Test parsing HTML when title has no following table"""
     html_content = b"""
     <html>
@@ -108,7 +108,7 @@ def test_parse_html_tables_no_table_after_title():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -120,7 +120,7 @@ def test_parse_html_tables_no_table_after_title():
     assert result == [expected]
 
 
-def test_parse_html_tables_missing_table_between_titles():
+def test_parse_html_tables_with_titles_missing_table_between_titles():
     """Test parsing HTML when there's no table between some titles"""
     html_content = b"""
     <html>
@@ -142,7 +142,7 @@ def test_parse_html_tables_missing_table_between_titles():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -158,7 +158,7 @@ def test_parse_html_tables_missing_table_between_titles():
     assert result == [expected]
 
 
-def test_parse_html_tables_title_before_another_title():
+def test_parse_html_tables_with_titles_title_before_another_title():
     """Test parsing when another title appears before a table"""
     html_content = b"""
     <html>
@@ -180,7 +180,7 @@ def test_parse_html_tables_title_before_another_title():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -196,7 +196,7 @@ def test_parse_html_tables_title_before_another_title():
     assert result == [expected]
 
 
-def test_parse_html_tables_complex_xpath_titles():
+def test_parse_html_tables_with_titles_complex_xpath_titles():
     """Test parsing with complex XPath title selectors"""
     html_content = b"""
     <html>
@@ -216,7 +216,7 @@ def test_parse_html_tables_complex_xpath_titles():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2[@class="section"]'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2[@class="section"]'}))
     
     expected = [
         {
@@ -228,7 +228,7 @@ def test_parse_html_tables_complex_xpath_titles():
     assert result == [expected]
 
 
-def test_parse_html_tables_different_title_tags():
+def test_parse_html_tables_with_titles_different_title_tags():
     """Test parsing with different title tag types"""
     html_content = b"""
     <html>
@@ -251,7 +251,7 @@ def test_parse_html_tables_different_title_tags():
     
     # Test with h1
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h1'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h1'}))
     
     expected = [
         {
@@ -263,7 +263,7 @@ def test_parse_html_tables_different_title_tags():
     
     # Test with h3
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h3'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h3'}))
     
     expected = [
         {
@@ -275,7 +275,7 @@ def test_parse_html_tables_different_title_tags():
     
     # Test with div
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'div[@class="title"]'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'div[@class="title"]'}))
     
     expected = [
         {
@@ -286,7 +286,7 @@ def test_parse_html_tables_different_title_tags():
     assert result == [expected]
 
 
-def test_parse_html_tables_with_empty_cells():
+def test_parse_html_tables_with_titles_with_empty_cells():
     """Test parsing tables with empty cells"""
     html_content = b"""
     <html>
@@ -302,7 +302,7 @@ def test_parse_html_tables_with_empty_cells():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -322,7 +322,7 @@ def test_parse_html_tables_with_empty_cells():
     assert result == [expected]
 
 
-def test_parse_html_tables_with_whitespace():
+def test_parse_html_tables_with_titles_with_whitespace():
     """Test parsing tables with whitespace in cells"""
     html_content = b"""
     <html>
@@ -337,7 +337,7 @@ def test_parse_html_tables_with_whitespace():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -353,7 +353,7 @@ def test_parse_html_tables_with_whitespace():
     assert result == [expected]
 
 
-def test_parse_html_tables_nested_elements():
+def test_parse_html_tables_with_titles_nested_elements():
     """Test parsing tables with nested elements in cells"""
     html_content = b"""
     <html>
@@ -368,7 +368,7 @@ def test_parse_html_tables_nested_elements():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -384,8 +384,8 @@ def test_parse_html_tables_nested_elements():
     assert result == [expected]
 
 
-def test_parse_html_tables_generator_behavior():
-    """Test that parse_html_tables returns a generator"""
+def test_parse_html_tables_with_titles_generator_behavior():
+    """Test that parse_html_tables_with_titles returns a generator"""
     html_content = b"""
     <html>
     <body>
@@ -398,7 +398,7 @@ def test_parse_html_tables_generator_behavior():
     """
     
     stream = BytesIO(html_content)
-    generator = parse_html_tables(stream, {'title_tag': 'h2'})
+    generator = parse_html_tables_with_titles(stream, {'title_tag': 'h2'})
     
     # Check if it's a generator
     assert hasattr(generator, '__iter__')
@@ -416,7 +416,7 @@ def test_parse_html_tables_generator_behavior():
     assert result == [expected]
 
 
-def test_parse_html_tables_no_title_tag():
+def test_parse_html_tables_with_titles_no_title_tag():
     """Test parsing when no title tag is found"""
     html_content = b"""
     <html>
@@ -429,12 +429,12 @@ def test_parse_html_tables_no_title_tag():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     assert result == [[]]
 
 
-def test_parse_html_tables_mixed_content():
+def test_parse_html_tables_with_titles_mixed_content():
     """Test parsing with mixed HTML content"""
     html_content = b"""
     <html>
@@ -453,7 +453,7 @@ def test_parse_html_tables_mixed_content():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -465,7 +465,7 @@ def test_parse_html_tables_mixed_content():
     assert result == [expected]
 
 
-def test_parse_html_tables_with_styled_cells():
+def test_parse_html_tables_with_titles_with_styled_cells():
     """Test parsing tables with styled cells"""
     html_content = b"""
     <html>
@@ -488,7 +488,7 @@ def test_parse_html_tables_with_styled_cells():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -504,7 +504,7 @@ def test_parse_html_tables_with_styled_cells():
     assert result == [expected]
 
 
-def test_parse_html_tables_with_header_tags():
+def test_parse_html_tables_with_titles_with_header_tags():
     """Test parsing tables with special header tags (th, thead)"""
     html_content = b"""
     <html>
@@ -536,7 +536,7 @@ def test_parse_html_tables_with_header_tags():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -556,7 +556,7 @@ def test_parse_html_tables_with_header_tags():
     assert result == [expected]
 
 
-def test_parse_html_tables_mixed_headers_and_data():
+def test_parse_html_tables_with_titles_mixed_headers_and_data():
     """Test parsing tables with mixed th and td tags"""
     html_content = b"""
     <html>
@@ -579,7 +579,7 @@ def test_parse_html_tables_mixed_headers_and_data():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -595,7 +595,7 @@ def test_parse_html_tables_mixed_headers_and_data():
     assert result == [expected]
 
 
-def test_parse_html_tables_complex_styling():
+def test_parse_html_tables_with_titles_complex_styling():
     """Test parsing tables with complex styling and nested elements"""
     html_content = b"""
     <html>
@@ -622,7 +622,7 @@ def test_parse_html_tables_complex_styling():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
@@ -634,7 +634,7 @@ def test_parse_html_tables_complex_styling():
     assert result == [expected]
 
 
-def test_parse_html_tables_empty_headers():
+def test_parse_html_tables_with_titles_empty_headers():
     """Test parsing tables with empty header cells"""
     html_content = b"""
     <html>
@@ -657,7 +657,7 @@ def test_parse_html_tables_empty_headers():
     """
     
     stream = BytesIO(html_content)
-    result = list(parse_html_tables(stream, {'title_tag': 'h2'}))
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
     
     expected = [
         {
