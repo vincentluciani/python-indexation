@@ -65,3 +65,15 @@ kubectl exec -it <pod-name> -- /bin/bash
 
 
 ollama run phi3:mini
+
+pytest --cov=. \
+       --cov-report=term-missing \
+       --cov-report=html \
+       --cov-report=xml
+       --cov-omit=*/__init__.py
+
+pytest --cov=extract_information/build_parser/parsers \
+       --cov-report=term-missing \
+       --cov-report=html \
+       --cov-report=xml
+       --cov-omit=*/__init__.py

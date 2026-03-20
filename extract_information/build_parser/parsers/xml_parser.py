@@ -7,8 +7,8 @@ def parse_xml(raw_stream, parsing_args):
     context = etree.iterparse(raw_stream, events=("end",), tag=f"{{{NS['ns']}}}{parsing_args.get('parent_tag')}")
         
     for _, elem in context:
-        child = elem.find(f"ns:{parsing_args.get('child_tag')}", NS)
-        if child is not None and child.text:
+        child = elem.find(f".//ns:{parsing_args.get('child_tag')}", NS)
+        if child is not None and child.text and child.text.strip():
             yield child.text.strip()
         elem.clear()
         while elem.getprevious() is not None:
