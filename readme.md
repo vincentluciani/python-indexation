@@ -1,8 +1,8 @@
 
-To activate the environment: 
+# To activate the environment: 
 source venv/bin/activate
 
-To test the python setup scripts:
+# To test the python setup scripts:
 On local, docker app must be running ;) . This should run the kubernetes cluster
 Refer to readme on elasticsearch repository (see port forwarding below, which is not persistent), and check the connection with Thunder client:
 kubectl port-forward deployment/elasticsearch 9200:9200
@@ -73,9 +73,3 @@ pytest --cov=code/ \
        --cov-report=xml
        --cov-omit=*/__init__.py
 
-# Run the parsers tests only 
-pytest --cov=extract_information/build_parser/parsers \
-       --cov-report=term-missing \
-       --cov-report=html \
-       --cov-report=xml
-       --cov-omit=*/__init__.py

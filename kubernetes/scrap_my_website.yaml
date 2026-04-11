@@ -8,7 +8,7 @@ spec:
       containers:
       - name: scrap-website
         image: vluciani/node-search-app:python-indexation-1.12
-        command: ["python", "run_sitemap_to_elastic.py"]
+        command: ["python", "src/run_sitemap_to_elastic.py"]
         env:
         - name: ELASTICSEARCH_URL
           value: "http://elasticsearch:9200"
