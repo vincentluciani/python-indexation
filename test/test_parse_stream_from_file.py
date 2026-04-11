@@ -1,11 +1,11 @@
 import pytest
 from unittest.mock import patch, MagicMock, mock_open
-from extract_information.parse_stream_from_file import parse_stream_from_file
+from src.extract_information.parse_stream_from_file import parse_stream_from_file
 
 
 class TestParseStreamFromFile:
-    @patch("extract_information.parse_stream_from_file.get_parser")
-    @patch("extract_information.parse_stream_from_file.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_file.get_parser")
+    @patch("src.extract_information.parse_stream_from_file.get_decompressor")
     @patch("builtins.open", new_callable=mock_open, read_data=b"data")
     def test_yields_parser_output(self, mock_file, mock_get_decompressor, mock_get_parser):
         mock_get_decompressor.return_value = MagicMock(return_value="decompressed_stream")
@@ -15,8 +15,8 @@ class TestParseStreamFromFile:
 
         assert result == ["item1", "item2"]
 
-    @patch("extract_information.parse_stream_from_file.get_parser")
-    @patch("extract_information.parse_stream_from_file.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_file.get_parser")
+    @patch("src.extract_information.parse_stream_from_file.get_decompressor")
     @patch("builtins.open", new_callable=mock_open, read_data=b"data")
     def test_file_opened_in_binary_mode(self, mock_file, mock_get_decompressor, mock_get_parser):
         mock_get_decompressor.return_value = MagicMock(return_value="stream")
@@ -26,8 +26,8 @@ class TestParseStreamFromFile:
 
         mock_file.assert_called_once_with("/fake/path.xml", "rb")
 
-    @patch("extract_information.parse_stream_from_file.get_parser")
-    @patch("extract_information.parse_stream_from_file.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_file.get_parser")
+    @patch("src.extract_information.parse_stream_from_file.get_decompressor")
     @patch("builtins.open", new_callable=mock_open, read_data=b"data")
     def test_decompressor_called_with_file_handle(self, mock_file, mock_get_decompressor, mock_get_parser):
         fake_decompressor = MagicMock(return_value="decompressed_stream")
@@ -38,8 +38,8 @@ class TestParseStreamFromFile:
 
         fake_decompressor.assert_called_once_with(mock_file.return_value.__enter__.return_value)
 
-    @patch("extract_information.parse_stream_from_file.get_parser")
-    @patch("extract_information.parse_stream_from_file.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_file.get_parser")
+    @patch("src.extract_information.parse_stream_from_file.get_decompressor")
     @patch("builtins.open", new_callable=mock_open, read_data=b"data")
     def test_parser_called_with_decompressed_stream_and_parsing_args(
         self, mock_file, mock_get_decompressor, mock_get_parser
@@ -53,8 +53,8 @@ class TestParseStreamFromFile:
 
         fake_parser.assert_called_once_with("decompressed_stream", parsing_args)
 
-    @patch("extract_information.parse_stream_from_file.get_parser")
-    @patch("extract_information.parse_stream_from_file.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_file.get_parser")
+    @patch("src.extract_information.parse_stream_from_file.get_decompressor")
     @patch("builtins.open", new_callable=mock_open, read_data=b"data")
     def test_correct_decompressor_and_parser_names_forwarded(
         self, mock_file, mock_get_decompressor, mock_get_parser
@@ -69,8 +69,8 @@ class TestParseStreamFromFile:
 
 
 class TestParseStreamFromFileErrors:
-    @patch("extract_information.parse_stream_from_file.get_parser")
-    @patch("extract_information.parse_stream_from_file.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_file.get_parser")
+    @patch("src.extract_information.parse_stream_from_file.get_decompressor")
     def test_file_not_found_raises(self, mock_get_decompressor, mock_get_parser):
         mock_get_decompressor.return_value = MagicMock(return_value="stream")
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
@@ -78,8 +78,8 @@ class TestParseStreamFromFileErrors:
         with pytest.raises(FileNotFoundError):
             list(parse_stream_from_file("/nonexistent/path.xml", "none", "xml", {}))
 
-    @patch("extract_information.parse_stream_from_file.get_parser")
-    @patch("extract_information.parse_stream_from_file.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_file.get_parser")
+    @patch("src.extract_information.parse_stream_from_file.get_decompressor")
     @patch("builtins.open", side_effect=PermissionError("denied"))
     def test_permission_error_raises(self, mock_file, mock_get_decompressor, mock_get_parser):
         mock_get_decompressor.return_value = MagicMock(return_value="stream")

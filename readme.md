@@ -66,12 +66,14 @@ kubectl exec -it <pod-name> -- /bin/bash
 
 ollama run phi3:mini
 
-pytest --cov=. \
+# Run all tests to get the coverage. Results on htmlconv (conversion is not well calculated when running the tests from the test menu on vs code)
+pytest --cov=code/ \
        --cov-report=term-missing \
        --cov-report=html \
        --cov-report=xml
        --cov-omit=*/__init__.py
 
+# Run the parsers tests only 
 pytest --cov=extract_information/build_parser/parsers \
        --cov-report=term-missing \
        --cov-report=html \

@@ -1,10 +1,10 @@
 from unicodedata import category
-from extract_information.build_decompressor.build_decompressor import get_decompressor
-from extract_information.build_parser.build_parser import get_parser
-from extract_information.parse_stream_from_url import parse_stream_from_url
-from send_information.data_senders.send_data_to_elastic import send_list_of_documents_to_elastic
-from extract_information.parse_stream_from_file import parse_stream_from_file
-from transform_information.transform_with_ai import summarize_with_ai
+from src.extract_information.build_decompressor.build_decompressor import get_decompressor
+from src.extract_information.build_parser.build_parser import get_parser
+from src.extract_information.parse_stream_from_url import parse_stream_from_url
+from src.send_information.data_senders.send_data_to_elastic import send_list_of_documents_to_elastic
+from src.extract_information.parse_stream_from_file import parse_stream_from_file
+from src.transform_information.transform_with_ai import summarize_with_ai
 
 
 if __name__ == "__main__":

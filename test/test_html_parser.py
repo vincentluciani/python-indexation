@@ -1,6 +1,6 @@
 import pytest
 from io import BytesIO
-from extract_information.build_parser.parsers.html_parser import parse_html_tables_with_titles
+from src.extract_information.build_parser.parsers.html_parser import parse_html_tables_with_titles
 
 
 def test_parse_html_tables_with_titles_basic():
@@ -671,6 +671,43 @@ def test_parse_html_tables_with_titles_empty_headers():
     ]
     
     assert result == [expected]
+
+
+def test_title_with_no_following_siblings_hits_else_pass():
+    """Cover line 21 (else: pass): title at end of document with no following siblings,
+    so _find_next_table returns None and the else branch is taken."""
+    html_content = b"""
+    <html>
+    <body>
+        <h2>Orphan Title</h2>
+    </body>
+    </html>
+    """
+
+    stream = BytesIO(html_content)
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
+
+    assert result == [[]]
+
+
+def test_table_with_caption_but_no_rows_hits_early_return():
+    """Cover line 43 (return): _process_table_rows is called with a table that has
+    children (truthy in lxml) but contains no <tr> elements."""
+    html_content = b"""
+    <html>
+    <body>
+        <h2>Category</h2>
+        <table>
+            <caption>Table caption with no rows</caption>
+        </table>
+    </body>
+    </html>
+    """
+
+    stream = BytesIO(html_content)
+    result = list(parse_html_tables_with_titles(stream, {'title_tag': 'h2'}))
+
+    assert result == [[]]
 
 
 if __name__ == '__main__':

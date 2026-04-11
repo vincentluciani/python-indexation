@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from extract_information.parse_stream_from_url import parse_stream_from_url
+from src.extract_information.parse_stream_from_url import parse_stream_from_url
 
 
 # ---------------------------------------------------------------------------
@@ -22,9 +22,9 @@ def _make_response(raw_content=b"data"):
 # ---------------------------------------------------------------------------
 
 class TestParseStreamFromUrl:
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_yields_parser_output(self, mock_get_decompressor, mock_get_parser, mock_requests_get):
         mock_response = _make_response()
         mock_requests_get.return_value = mock_response
@@ -39,9 +39,9 @@ class TestParseStreamFromUrl:
 
         assert result == ["item1", "item2"]
 
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_passes_url_and_headers_to_requests(self, mock_get_decompressor, mock_get_parser, mock_requests_get):
         mock_response = _make_response()
         mock_requests_get.return_value = mock_response
@@ -56,9 +56,9 @@ class TestParseStreamFromUrl:
             headers={"User-Agent": "Mozilla/5.0"},
         )
 
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_decompressor_called_with_raw_stream(self, mock_get_decompressor, mock_get_parser, mock_requests_get):
         mock_response = _make_response()
         mock_requests_get.return_value = mock_response
@@ -71,9 +71,9 @@ class TestParseStreamFromUrl:
 
         fake_decompressor.assert_called_once_with(mock_response.raw)
 
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_parser_called_with_decompressed_stream_and_parsing_args(
         self, mock_get_decompressor, mock_get_parser, mock_requests_get
     ):
@@ -89,9 +89,9 @@ class TestParseStreamFromUrl:
 
         fake_parser.assert_called_once_with("decompressed_stream", parsing_args)
 
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_decode_content_set_to_true(self, mock_get_decompressor, mock_get_parser, mock_requests_get):
         mock_response = _make_response()
         mock_requests_get.return_value = mock_response
@@ -102,9 +102,9 @@ class TestParseStreamFromUrl:
 
         assert mock_response.raw.decode_content is True
 
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_correct_decompressor_and_parser_names_forwarded(
         self, mock_get_decompressor, mock_get_parser, mock_requests_get
     ):
@@ -124,9 +124,9 @@ class TestParseStreamFromUrl:
 # ---------------------------------------------------------------------------
 
 class TestParseStreamFromUrlErrors:
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_http_error_raises(self, mock_get_decompressor, mock_get_parser, mock_requests_get):
         import requests as req
         mock_response = _make_response()
@@ -138,9 +138,9 @@ class TestParseStreamFromUrlErrors:
         with pytest.raises(req.exceptions.HTTPError):
             list(parse_stream_from_url("http://example.com/missing", "none", "xml", {}))
 
-    @patch("extract_information.parse_stream_from_url.requests.get")
-    @patch("extract_information.parse_stream_from_url.get_parser")
-    @patch("extract_information.parse_stream_from_url.get_decompressor")
+    @patch("src.extract_information.parse_stream_from_url.requests.get")
+    @patch("src.extract_information.parse_stream_from_url.get_parser")
+    @patch("src.extract_information.parse_stream_from_url.get_decompressor")
     def test_connection_error_raises(self, mock_get_decompressor, mock_get_parser, mock_requests_get):
         import requests as req
         mock_requests_get.side_effect = req.exceptions.ConnectionError("unreachable")

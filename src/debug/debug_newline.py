@@ -1,4 +1,4 @@
-from extract_information.build_parser.parsers.csv_parser import parse_csv
+from src.extract_information.build_parser.parsers.csv_parser import parse_csv
 
 # Debug newline in unquoted field
 csv_data = [

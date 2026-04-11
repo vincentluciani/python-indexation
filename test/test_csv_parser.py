@@ -1,6 +1,6 @@
 import pytest
 import csv
-from extract_information.build_parser.parsers.csv_parser import parse_csv
+from src.extract_information.build_parser.parsers.csv_parser import parse_csv
 
 
 def test_parse_csv_basic():

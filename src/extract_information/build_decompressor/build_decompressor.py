@@ -1,4 +1,4 @@
-from extract_information.build_decompressor.decompressors.gzip_decompressor import get_decompressed_gzip_stream
+from src.extract_information.build_decompressor.decompressors.gzip_decompressor import get_decompressed_gzip_stream
 
 def get_decompressor(parser_name):
     registry = {

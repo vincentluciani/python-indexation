@@ -1,5 +1,5 @@
 from io import BytesIO
-from extract_information.build_parser.parsers.html_parser import parse_html_tables
+from src.extract_information.build_parser.parsers.html_parser import parse_html_tables
 
 # Test the complex styling case
 html_content = b"""

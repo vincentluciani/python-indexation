@@ -1,8 +1,8 @@
 import pytest
-from extract_information.build_parser.build_parser import get_parser, return_input
-from extract_information.build_parser.parsers.xml_parser import parse_xml
-from extract_information.build_parser.parsers.html_parser import parse_html_tables_with_titles
-from extract_information.build_parser.parsers.csv_parser import parse_csv
+from src.extract_information.build_parser.build_parser import get_parser, return_input
+from src.extract_information.build_parser.parsers.xml_parser import parse_xml
+from src.extract_information.build_parser.parsers.html_parser import parse_html_tables_with_titles
+from src.extract_information.build_parser.parsers.csv_parser import parse_csv
 
 
 def test_xml_returns_parse_xml():

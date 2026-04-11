@@ -35,17 +35,6 @@ def _find_next_table(title_tag, title_tag_name):
             return element
     return None
 
-def _has_preceding_title(table, title_tag_name):
-    """Check if table has a preceding title element"""
-    preceding_elements = table.xpath("preceding-sibling::*")
-    base_tag = title_tag_name.split('[')[0]
-    
-    for element in preceding_elements:
-        if element.tag == base_tag:
-            return True
-    return False
-
-
 def _process_table_rows(table, category, results):
     """Process all rows in a table"""
     rows = table.xpath(".//tr")

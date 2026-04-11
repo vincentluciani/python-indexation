@@ -1,4 +1,4 @@
-from extract_information.build_parser.parsers.csv_parser import parse_csv
+from src.extract_information.build_parser.parsers.csv_parser import parse_csv
 
 # Debug the CSV parser
 csv_data = [b'test,data\n']

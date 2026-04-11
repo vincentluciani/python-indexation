@@ -1,6 +1,6 @@
 import pytest
 from io import BytesIO
-from extract_information.build_parser.parsers import xml_parser
+from src.extract_information.build_parser.parsers import xml_parser
 
 def test_parse_xml():
         # In-memory XML stream

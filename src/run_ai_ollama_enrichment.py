@@ -1,5 +1,5 @@
-from extract_information.parse_stream_from_file import parse_stream_from_file
-from transform_information.transform_with_ai import summarize_with_ai
+from src.extract_information.parse_stream_from_file import parse_stream_from_file
+from src.transform_information.transform_with_ai import summarize_with_ai
 
 
 if __name__ == "__main__":
