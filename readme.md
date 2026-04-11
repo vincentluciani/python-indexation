@@ -67,7 +67,9 @@ kubectl exec -it <pod-name> -- /bin/bash
 ollama run phi3:mini
 
 # Run all tests to get the coverage. Results on htmlconv (conversion is not well calculated when running the tests from the test menu on vs code)
-pytest --cov=code/ \
+# You must install the Live Server extension to view the index.html in the htmlconv folder
+# You can also add the extension coverage gutter to see the coverage directly from your code
+pytest --cov=code/unit \
        --cov-report=term-missing \
        --cov-report=html \
        --cov-report=xml
