@@ -48,3 +48,38 @@ def test_run_sitemap_to_elastic_parses_html_tables(local_server):
             "answer": "Answer.",
         }
     ]
+
+
+def test_run_sitemap_to_elastic_parses_multiple_tables_and_rows(local_server):
+    script_path = Path(__file__).resolve().parents[2] / "src" / "run_sitemap_to_elastic.py"
+    sitemap_url = f"{local_server}/sitemap_multi.xml.gz"
+
+    with patch(
+        "src.send_information.data_senders.send_data_to_elastic.send_list_of_documents_to_elastic"
+    ) as mock_send:
+        with patch.dict(os.environ, {"SITEMAP_URL": sitemap_url}, clear=False):
+            runpy.run_path(str(script_path), run_name="__main__")
+
+    mock_send.assert_called_once()
+    sent_payload, index_name = mock_send.call_args[0]
+    assert index_name == "vince"
+    assert sent_payload == [
+        {
+            "category": "tutorial",
+            "sub_category": "Tutorial Section A",
+            "question": "Question A1?",
+            "answer": "Answer A1.",
+        },
+        {
+            "category": "tutorial",
+            "sub_category": "Tutorial Section A",
+            "question": "Question A2?",
+            "answer": "Answer A2.",
+        },
+        {
+            "category": "tutorial",
+            "sub_category": "Tutorial Section B",
+            "question": "Question B1?",
+            "answer": "Answer B1.",
+        },
+    ]
