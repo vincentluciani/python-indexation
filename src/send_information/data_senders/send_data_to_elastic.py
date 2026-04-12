@@ -12,12 +12,6 @@ def send_list_of_documents_to_elastic(document_list, index_name):
     bulk_data = build_bulk_upload_entry(document_list, index_name)
     send_data_to_elastic(bulk_data, index_name)
 
-def build_bulk_upload_entry(document_list):
-    final_bulk_data = ""
-    for document in document_list:
-        final_bulk_data += build_bulk_upload_entry(document)
-    return final_bulk_data
-
 def send_data_to_elastic(input_data, index_name):
     user =  os.getenv("ELASTIC_USER","elastic")
     password = os.getenv("ELASTIC_PASSWORD")
