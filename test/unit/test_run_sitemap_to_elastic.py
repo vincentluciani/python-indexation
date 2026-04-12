@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 
 def test_run_sitemap_to_elastic_transforms_tutorial_url_and_sends_documents():
+    # ../src/run_sitemap_to_elastic.py 
     script_path = Path(__file__).resolve().parents[2] / "src" / "run_sitemap_to_elastic.py"
 
     def fake_parse_stream_from_url(url, compression, parser_type, json_args):
