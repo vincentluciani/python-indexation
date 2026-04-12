@@ -1,4 +1,5 @@
 from unicodedata import category
+import os
 from src.extract_information.build_decompressor.build_decompressor import get_decompressor
 from src.extract_information.build_parser.build_parser import get_parser
 from src.extract_information.parse_stream_from_url import parse_stream_from_url
@@ -9,7 +10,7 @@ from src.transform_information.transform_with_ai import summarize_with_ai
 
 if __name__ == "__main__":
     
-    url = "https://www.vincent-luciani.com/sitemap.xml.gz"
+    url = os.getenv("SITEMAP_URL", "https://www.vincent-luciani.com/sitemap.xml.gz")
     parsing_args = {
         "parent_tag": "url",
         "child_tag": "loc"

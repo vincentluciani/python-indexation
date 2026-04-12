@@ -73,6 +73,6 @@ pytest --cov=src \
        --cov-report=term-missing \
        --cov-report=html \
        --cov-report=xml
-       --cov-omit=*/__init__.py
+
 
 # TODO: python simple http server for integration test
