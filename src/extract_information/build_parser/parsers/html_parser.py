@@ -17,8 +17,6 @@ def parse_html_tables_with_titles(stream, parsing_args):
         
         if table:
             _process_table_rows(table, category, results)
-        else:
-            pass
   
     yield results
 

@@ -1,12 +1,6 @@
 {
     // Run pytest on the "test" folder
-    "python.testing.pytestArgs": [
-        "test",
-        "--cov=extract_information/build_parser/parsers",
-        "--cov-report=term-missing",
-        "--cov-report=xml",
-        "--cov-report=html"
-    ],
+    "python.testing.pytestArgs": [],
 
     // Disable unittest (you are using pytest)
     "python.testing.unittestEnabled": false,
