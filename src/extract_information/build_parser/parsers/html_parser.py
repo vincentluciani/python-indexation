@@ -15,7 +15,7 @@ def parse_html_tables_with_titles(stream, parsing_args):
         category = title_tag.text_content().strip()
         table = _find_next_table(title_tag, title_tag_name)
         
-        if table:
+        if table is not None:
             _process_table_rows(table, category, results)
   
     yield results
