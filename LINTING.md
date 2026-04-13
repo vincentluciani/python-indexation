@@ -122,10 +122,12 @@ Run these commands in order for a broad lint sweep:
 
 ```bash
 source ./venv/bin/activate
-python -m pip install ruff pylint bandit mypy pydocstyle
+python -m pip install ruff pylint bandit mypy pydocstyle radon
 ruff check src test
 pylint src test
 bandit -r src
+python -m radon cc -s src
+python -m radon mi src
 cd src && mypy .
 pydocstyle src test
 python -m compileall src test
