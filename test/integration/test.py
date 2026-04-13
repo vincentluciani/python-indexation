@@ -21,9 +21,9 @@ def local_server_url():
     server.stop()
 
 
-def test_scraper_against_local(local_server_url):
+def test_scraper_against_local(server_url):
     """Verify the local HTTP server serves static files correctly."""
-    target_url = f"{local_server_url}/test_page.html"
+    target_url = f"{server_url}/test_page.html"
 
     response = requests.get(target_url, timeout=10)
 
@@ -31,10 +31,10 @@ def test_scraper_against_local(local_server_url):
     assert "Hello World" in response.text
 
 
-def test_run_sitemap_to_elastic_parses_html_tables(local_server_url):
+def test_run_sitemap_to_elastic_parses_html_tables(server_url):
     """Verify sitemap parsing produces table rows and sends documents."""
     script_path = Path(__file__).resolve().parents[2] / "src" / "run_sitemap_to_elastic.py"
-    sitemap_url = f"{local_server_url}/sitemap.xml.gz"
+    sitemap_url = f"{server_url}/sitemap.xml.gz"
 
     with patch(
         "src.send_information.data_senders.send_data_to_elastic.send_list_of_documents_to_elastic"
@@ -55,10 +55,10 @@ def test_run_sitemap_to_elastic_parses_html_tables(local_server_url):
     ]
 
 
-def test_run_sitemap_to_elastic_parses_multiple_tables_and_rows(local_server_url):
+def test_run_sitemap_to_elastic_parses_multiple_tables_and_rows(server_url):
     """Verify sitemap parsing supports multiple tutorial tables and rows."""
     script_path = Path(__file__).resolve().parents[2] / "src" / "run_sitemap_to_elastic.py"
-    sitemap_url = f"{local_server_url}/sitemap_multi.xml.gz"
+    sitemap_url = f"{server_url}/sitemap_multi.xml.gz"
 
     with patch(
         "src.send_information.data_senders.send_data_to_elastic.send_list_of_documents_to_elastic"

@@ -5,6 +5,7 @@ from src.transform_information.transform_with_ai import summarize_with_ai
 
 
 def main():
+    """Run CSV-based AI enrichment using local Ollama."""
     list_of_suggestions = []
     for parsed_element in parse_stream_from_file(
         {
@@ -24,11 +25,6 @@ def main():
         "bullet. Be concise."
     )
     list_prefix = "Customer Suggestions"
-    reduce_prompt = (
-        "You are a lead strategist. Merge the following lists of feature "
-        "requests into one master list. Remove any duplicates and combine "
-        "similar points."
-    )
     print("calling summarize_with_ai...")
     result = summarize_with_ai(
         model_name,
