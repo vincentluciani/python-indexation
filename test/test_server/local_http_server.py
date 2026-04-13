@@ -8,6 +8,7 @@ from pathlib import Path
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     """A threaded TCP server that reuses the listening address."""
+
     allow_reuse_address = True
 
 
@@ -15,6 +16,7 @@ class LocalHttpServer:
     """Serve files from a local directory over HTTP for integration tests."""
 
     def __init__(self, directory, host="127.0.0.1", port=0):
+        """Initialize the local HTTP server with directory, host, and port."""
         self.directory = Path(directory).resolve()
         self.host = host
         self.port = port

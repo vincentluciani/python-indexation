@@ -33,12 +33,12 @@ ruff check src test
 ```
 
 `ruff` covers:
-- formatting issues
-- unused imports and variables
-- syntax and AST issues
-- naming conventions
-- complexity issues
-- common bug patterns
+    - formatting issues
+    - unused imports and variables
+    - syntax and AST issues
+    - naming conventions
+    - complexity issues
+    - common bug patterns
 
 ### Naming conventions and quality
 
@@ -75,8 +75,20 @@ This checks for issues such as:
 If the repository grows and adds type hints, use `mypy` to validate annotations.
 
 ```bash
-mypy src test
+cd src && mypy .
 ```
+
+Note: Run mypy from the `src` directory to avoid duplicate module name issues.
+
+### Code complexity
+
+Use `radon` to compute the cyclomatic complexity of each function and identify complex code paths.
+
+```bash
+python -m radon cc -s src
+```
+
+A function with a complexity score of `A` is simple, while `B`, `C`, `D`, `E`, and `F` indicate increasing complexity.
 
 ### Documentation style
 
@@ -104,7 +116,7 @@ python -m pip install ruff pylint bandit mypy pydocstyle
 ruff check src test
 pylint src test
 bandit -r src
-mypy src test
+cd src && mypy .
 pydocstyle src test
 python -m compileall src test
 ```
