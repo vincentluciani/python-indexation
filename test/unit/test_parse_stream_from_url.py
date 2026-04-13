@@ -64,6 +64,7 @@ class TestParseStreamFromUrl:
             "http://example.com/sitemap.xml",
             stream=True,
             headers={"User-Agent": "Mozilla/5.0"},
+            timeout=10,
         )
 
     @patch("src.extract_information.parse_stream_from_url.requests.get")
