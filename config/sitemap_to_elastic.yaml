@@ -11,7 +11,6 @@ filter:
 
 secondary_source:
   type: url
-  location_template: "{item}"
   decompressor: none
   parser: html_tables
   title_tag: h2

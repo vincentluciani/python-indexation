@@ -11,12 +11,10 @@ if __name__ == "__main__":
         resulting_learning_table = []
         if "tutorial" in url_to_parse:
             print("Found tutorial URL:", url_to_parse)
-            parsing_args["title_tag"] = "h2"
-            parsing_args["url"] = url_to_parse
-            parsing_args["decompressor"] = "none"
-            parsing_args["parser"] = "html_tables"
+            parsing_args_tutorial = config.get("secondary_source", {})
+            parsing_args_tutorial["url"] = url_to_parse
 
-            for item in parse_stream_from_url(parsing_args):
+            for item in parse_stream_from_url(parsing_args_tutorial):
                 transformed_item = [
                     {
                         'category': url_to_parse.split("/")[3],

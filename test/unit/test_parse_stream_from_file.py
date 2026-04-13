@@ -11,7 +11,12 @@ class TestParseStreamFromFile:
         mock_get_decompressor.return_value = MagicMock(return_value="decompressed_stream")
         mock_get_parser.return_value = MagicMock(return_value=iter(["item1", "item2"]))
 
-        result = list(parse_stream_from_file("/fake/path.xml", "none", "xml", {}))
+        parsing_args = {
+            "file_path": "/fake/path.xml",
+            "decompressor": "none",
+            "parser": "xml",
+        }
+        result = list(parse_stream_from_file(parsing_args))
 
         assert result == ["item1", "item2"]
 
@@ -22,7 +27,12 @@ class TestParseStreamFromFile:
         mock_get_decompressor.return_value = MagicMock(return_value="stream")
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
-        list(parse_stream_from_file("/fake/path.xml", "none", "xml", {}))
+        parsing_args = {
+            "file_path": "/fake/path.xml",
+            "decompressor": "none",
+            "parser": "xml",
+        }
+        list(parse_stream_from_file(parsing_args))
 
         mock_file.assert_called_once_with("/fake/path.xml", "rb")
 
@@ -34,7 +44,12 @@ class TestParseStreamFromFile:
         mock_get_decompressor.return_value = fake_decompressor
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
-        list(parse_stream_from_file("/fake/path.xml", "gzip", "xml", {}))
+        parsing_args = {
+            "file_path": "/fake/path.xml",
+            "decompressor": "gzip",
+            "parser": "xml",
+        }
+        list(parse_stream_from_file(parsing_args))
 
         fake_decompressor.assert_called_once_with(mock_file.return_value.__enter__.return_value)
 
@@ -48,8 +63,14 @@ class TestParseStreamFromFile:
         fake_parser = MagicMock(return_value=iter([]))
         mock_get_parser.return_value = fake_parser
 
-        parsing_args = {"parent_tag": "url", "child_tag": "loc"}
-        list(parse_stream_from_file("/fake/path.xml", "none", "xml", parsing_args))
+        parsing_args = {
+            "file_path": "/fake/path.xml",
+            "decompressor": "none",
+            "parser": "xml",
+            "parent_tag": "url",
+            "child_tag": "loc",
+        }
+        list(parse_stream_from_file(parsing_args))
 
         fake_parser.assert_called_once_with("decompressed_stream", parsing_args)
 
@@ -62,7 +83,12 @@ class TestParseStreamFromFile:
         mock_get_decompressor.return_value = MagicMock(return_value="stream")
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
-        list(parse_stream_from_file("/fake/path.csv", "gzip", "csv", {}))
+        parsing_args = {
+            "file_path": "/fake/path.csv",
+            "decompressor": "gzip",
+            "parser": "csv",
+        }
+        list(parse_stream_from_file(parsing_args))
 
         mock_get_decompressor.assert_called_once_with("gzip")
         mock_get_parser.assert_called_once_with("csv")
@@ -76,7 +102,12 @@ class TestParseStreamFromFileErrors:
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
         with pytest.raises(FileNotFoundError):
-            list(parse_stream_from_file("/nonexistent/path.xml", "none", "xml", {}))
+            parsing_args = {
+                "file_path": "/nonexistent/path.xml",
+                "decompressor": "none",
+                "parser": "xml",
+            }
+            list(parse_stream_from_file(parsing_args))
 
     @patch("src.extract_information.parse_stream_from_file.get_parser")
     @patch("src.extract_information.parse_stream_from_file.get_decompressor")
@@ -86,7 +117,12 @@ class TestParseStreamFromFileErrors:
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
         with pytest.raises(PermissionError):
-            list(parse_stream_from_file("/protected/path.xml", "none", "xml", {}))
+            parsing_args = {
+                "file_path": "/protected/path.xml",
+                "decompressor": "none",
+                "parser": "xml",
+            }
+            list(parse_stream_from_file(parsing_args))
 
 
 if __name__ == "__main__":

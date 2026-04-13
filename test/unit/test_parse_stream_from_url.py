@@ -35,7 +35,12 @@ class TestParseStreamFromUrl:
         fake_parser = MagicMock(return_value=iter(["item1", "item2"]))
         mock_get_parser.return_value = fake_parser
 
-        result = list(parse_stream_from_url("http://example.com", "none", "xml", {}))
+        parsing_args = {
+            "url": "http://example.com",
+            "decompressor": "none",
+            "parser": "xml",
+        }
+        result = list(parse_stream_from_url(parsing_args))
 
         assert result == ["item1", "item2"]
 
@@ -48,7 +53,12 @@ class TestParseStreamFromUrl:
         mock_get_decompressor.return_value = MagicMock(return_value="stream")
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
-        list(parse_stream_from_url("http://example.com/sitemap.xml", "none", "xml", {}))
+        parsing_args = {
+            "url": "http://example.com/sitemap.xml",
+            "decompressor": "none",
+            "parser": "xml",
+        }
+        list(parse_stream_from_url(parsing_args))
 
         mock_requests_get.assert_called_once_with(
             "http://example.com/sitemap.xml",
@@ -67,7 +77,12 @@ class TestParseStreamFromUrl:
         mock_get_decompressor.return_value = fake_decompressor
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
-        list(parse_stream_from_url("http://example.com", "gzip", "xml", {}))
+        parsing_args = {
+            "url": "http://example.com",
+            "decompressor": "gzip",
+            "parser": "xml",
+        }
+        list(parse_stream_from_url(parsing_args))
 
         fake_decompressor.assert_called_once_with(mock_response.raw)
 
@@ -84,8 +99,14 @@ class TestParseStreamFromUrl:
         fake_parser = MagicMock(return_value=iter([]))
         mock_get_parser.return_value = fake_parser
 
-        parsing_args = {"parent_tag": "url", "child_tag": "loc"}
-        list(parse_stream_from_url("http://example.com", "none", "xml", parsing_args))
+        parsing_args = {
+            "url": "http://example.com",
+            "decompressor": "none",
+            "parser": "xml",
+            "parent_tag": "url",
+            "child_tag": "loc",
+        }
+        list(parse_stream_from_url(parsing_args))
 
         fake_parser.assert_called_once_with("decompressed_stream", parsing_args)
 
@@ -98,7 +119,12 @@ class TestParseStreamFromUrl:
         mock_get_decompressor.return_value = MagicMock(return_value="stream")
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
-        list(parse_stream_from_url("http://example.com", "none", "xml", {}))
+        parsing_args = {
+            "url": "http://example.com",
+            "decompressor": "none",
+            "parser": "xml",
+        }
+        list(parse_stream_from_url(parsing_args))
 
         assert mock_response.raw.decode_content is True
 
@@ -113,7 +139,12 @@ class TestParseStreamFromUrl:
         mock_get_decompressor.return_value = MagicMock(return_value="stream")
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
-        list(parse_stream_from_url("http://example.com", "gzip", "csv", {}))
+        parsing_args = {
+            "url": "http://example.com",
+            "decompressor": "gzip",
+            "parser": "csv",
+        }
+        list(parse_stream_from_url(parsing_args))
 
         mock_get_decompressor.assert_called_once_with("gzip")
         mock_get_parser.assert_called_once_with("csv")
@@ -136,7 +167,12 @@ class TestParseStreamFromUrlErrors:
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
         with pytest.raises(req.exceptions.HTTPError):
-            list(parse_stream_from_url("http://example.com/missing", "none", "xml", {}))
+            parsing_args = {
+                "url": "http://example.com/missing",
+                "decompressor": "none",
+                "parser": "xml",
+            }
+            list(parse_stream_from_url(parsing_args))
 
     @patch("src.extract_information.parse_stream_from_url.requests.get")
     @patch("src.extract_information.parse_stream_from_url.get_parser")
@@ -148,7 +184,12 @@ class TestParseStreamFromUrlErrors:
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
         with pytest.raises(req.exceptions.ConnectionError):
-            list(parse_stream_from_url("http://unreachable.invalid", "none", "xml", {}))
+            parsing_args = {
+                "url": "http://unreachable.invalid",
+                "decompressor": "none",
+                "parser": "xml",
+            }
+            list(parse_stream_from_url(parsing_args))
 
 
 if __name__ == "__main__":

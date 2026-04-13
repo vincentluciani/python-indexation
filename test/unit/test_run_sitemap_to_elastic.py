@@ -7,10 +7,11 @@ def test_run_sitemap_to_elastic_transforms_tutorial_url_and_sends_documents():
     # ../src/run_sitemap_to_elastic.py 
     script_path = Path(__file__).resolve().parents[2] / "src" / "run_sitemap_to_elastic.py"
      
-    def fake_parse_stream_from_url(url, compression, parser_type, json_args):
-        if parser_type == "xml":
+    def fake_parse_stream_from_url(parsing_args):
+        recorded_args.append(parsing_args.copy())
+        if parsing_args.get("parser") == "xml":
             return iter(["https://www.example.com/tutorial/page1"])
-        if parser_type == "html_tables":
+        if parsing_args.get("parser") == "html_tables":
             return iter([
                 [
                     {
@@ -21,23 +22,27 @@ def test_run_sitemap_to_elastic_transforms_tutorial_url_and_sends_documents():
             ])
         return iter([])
 
+    recorded_args = []
     with patch("src.extract_information.parse_stream_from_url.parse_stream_from_url", side_effect=fake_parse_stream_from_url) as mock_parse, \
          patch("src.send_information.data_senders.send_data_to_elastic.send_list_of_documents_to_elastic") as mock_send, \
          patch("builtins.print"):
         runpy.run_path(str(script_path), run_name="__main__")
 
-        mock_parse.assert_any_call(
-            "https://www.vincent-luciani.com/sitemap.xml.gz",
-            "gzip",
-            "xml",
-            {"parent_tag": "url", "child_tag": "loc"},
-        )
-        mock_parse.assert_any_call(
-            "https://www.example.com/tutorial/page1",
-            "none",
-            "html_tables",
-            {"title_tag": "h2"},
-        )
+        assert recorded_args[0] == {
+            "type": "url",
+            "location": "https://www.vincent-luciani.com/sitemap.xml.gz",
+            "decompressor": "gzip",
+            "parser": "xml",
+            "parent_tag": "url",
+            "child_tag": "loc",
+        }
+        assert recorded_args[1] == {
+            "type": "url",
+            "decompressor": "none",
+            "parser": "html_tables",
+            "title_tag": "h2",
+            "url": "https://www.example.com/tutorial/page1",
+        }
         mock_send.assert_called_once_with(
             [
                 {
