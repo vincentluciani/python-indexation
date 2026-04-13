@@ -1,0 +1,27 @@
+source:
+  type: url
+  location: "https://www.vincent-luciani.com/sitemap.xml.gz"
+  decompressor: gzip
+  parser: xml
+  parent_tag: url
+  child_tag: loc
+
+filter:
+  contains: tutorial
+
+secondary_source:
+  type: url
+  location_template: "{item}"
+  decompressor: none
+  parser: html_tables
+  title_tag: h2
+
+document_mapping:
+  category: "{url_parts[3]}"
+  sub_category: "{table_title}"
+  question: "{columns_values[0]}"
+  answer: "{columns_values[1]}"
+
+send:
+  destination: elastic
+  index_name: vince
