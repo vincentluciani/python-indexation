@@ -23,7 +23,7 @@ def test_run_sitemap_to_elastic_transforms_tutorial_url_and_sends_documents():
         return iter([])
 
     recorded_args = []
-    with patch("src.extract_information.parse_stream_from_url.parse_stream_from_url", side_effect=fake_parse_stream_from_url) as mock_parse, \
+    with patch("src.extract_information.parse_stream_from_url.parse_stream_from_url", side_effect=fake_parse_stream_from_url), \
          patch("src.send_information.data_senders.send_data_to_elastic.send_list_of_documents_to_elastic") as mock_send, \
          patch("builtins.print"):
         runpy.run_path(str(script_path), run_name="__main__")

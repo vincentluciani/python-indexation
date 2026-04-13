@@ -16,9 +16,10 @@ class LocalHttpServer:
         self.host = host
         self.port = port
 
-        handler = lambda *args, **kwargs: http.server.SimpleHTTPRequestHandler(
-            *args, directory=str(self.directory), **kwargs
-        )
+        def handler(*args, **kwargs):
+            return http.server.SimpleHTTPRequestHandler(
+                *args, directory=str(self.directory), **kwargs
+            )
 
         self.httpd = ThreadedTCPServer((host, port), handler)
         self.port = self.httpd.server_address[1]

@@ -64,27 +64,6 @@ def test_parse_csv_empty_lines():
 
     assert result == [expected]
 
-def test_parse_csv_basic():
-    """Test basic CSV parsing functionality"""
-    # Create mock stream with CSV data
-    csv_data = [
-        b'name,age,city\n',
-        b'John,25,New York\n',
-        b'Jane,30,Los Angeles\n',
-        b'Bob,35,Chicago\n'
-    ]
-    
-    # Test the parser
-    result = list(parse_csv(iter(csv_data), {}))
-    
-    # Expected result
-    expected = [['name', 'age', 'city'], 
-                ['John', '25', 'New York'], 
-                ['Jane', '30', 'Los Angeles'], 
-                ['Bob', '35', 'Chicago']]
-    
-    assert result == [expected]
-
 def test_parse_csv_single_row():
     """Test parsing CSV with single row"""
     csv_data = [b'header1,header2,header3\n']

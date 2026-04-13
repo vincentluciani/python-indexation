@@ -1,6 +1,4 @@
 from lxml import etree
-import xml.etree.ElementTree as ET
-
 
 def parse_xml(raw_stream, parsing_args):
     NS = {"ns": "http://www.sitemaps.org/schemas/sitemap/0.9"}
