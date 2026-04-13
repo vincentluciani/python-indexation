@@ -90,6 +90,16 @@ python -m radon cc -s src
 
 A function with a complexity score of `A` is simple, while `B`, `C`, `D`, `E`, and `F` indicate increasing complexity.
 
+### Maintainability index
+
+Use `radon` to compute the maintainability index across the source directory.
+
+```bash
+python -m radon mi src
+```
+
+A score of `A` is best; lower scores may indicate areas worth refactoring.
+
 ### Documentation style
 
 Optionally check docstring formatting with `pydocstyle`.
