@@ -10,20 +10,21 @@ from src.read_configuration.read_configuration import load_yaml_config
 if __name__ == "__main__":
     config = load_yaml_config("sitemap_to_elastic")
     parsing_args = config.get("source", {})
-
+    print("========= Parsing arguments =========")
+    print(parsing_args)
     for url_to_parse in parse_stream_from_url(parsing_args):
         print("======")
         resulting_learning_table = []
         if "tutorial" in url_to_parse:
             print("Found tutorial URL:", url_to_parse)
             parsing_args_tutorial = config.get("secondary_source", {})
-            parsing_args_tutorial["url"] = url_to_parse
+            parsing_args_tutorial["location"] = url_to_parse
 
             for item in parse_stream_from_url(parsing_args_tutorial):
                 transformed_item = [
                     {
                         "category": url_to_parse.split("/")[3],
-                        "sub_category": x.get("table_title", "N/A"),
+                        "subCategory": x.get("table_title", "N/A"),
                         "question": (
                             x.get("columns_values", ["N/A"])[0]
                             if len(x.get("columns_values", [])) > 1

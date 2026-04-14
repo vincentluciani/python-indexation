@@ -11,10 +11,12 @@ def parse_stream_from_url(parsing_args):
     """Yield parsed elements from a remote URL stream."""
     decompressor = get_decompressor(parsing_args.get("decompressor", "none"))
     parser = get_parser(parsing_args.get("parser", "none"))
+    url = parsing_args.get("location")
     headers = {"User-Agent": "Mozilla/5.0"}
+    print(f"Fetching and parsing stream from URL: {url}")
 
     with requests.get(
-        parsing_args.get("url"),
+        url,
         stream=True,
         headers=headers,
         timeout=10,

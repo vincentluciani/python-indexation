@@ -48,7 +48,7 @@ def test_run_sitemap_to_elastic_parses_html_tables(server_url):
     assert sent_payload == [
         {
             "category": "tutorial",
-            "sub_category": "Tutorial Section",
+            "subCategory": "Tutorial Section",
             "question": "Question?",
             "answer": "Answer.",
         }
@@ -72,19 +72,19 @@ def test_run_sitemap_to_elastic_parses_multiple_tables_and_rows(server_url):
     assert sent_payload == [
         {
             "category": "tutorial",
-            "sub_category": "Tutorial Section A",
+            "subCategory": "Tutorial Section A",
             "question": "Question A1?",
             "answer": "Answer A1.",
         },
         {
             "category": "tutorial",
-            "sub_category": "Tutorial Section A",
+            "subCategory": "Tutorial Section A",
             "question": "Question A2?",
             "answer": "Answer A2.",
         },
         {
             "category": "tutorial",
-            "sub_category": "Tutorial Section B",
+            "subCategory": "Tutorial Section B",
             "question": "Question B1?",
             "answer": "Answer B1.",
         },

@@ -54,7 +54,7 @@ class TestParseStreamFromUrl:
         mock_get_parser.return_value = MagicMock(return_value=iter([]))
 
         parsing_args = {
-            "url": "http://example.com/sitemap.xml",
+            "location": "http://example.com/sitemap.xml",
             "decompressor": "none",
             "parser": "xml",
         }

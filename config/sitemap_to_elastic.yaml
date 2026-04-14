@@ -17,7 +17,7 @@ secondary_source:
 
 document_mapping:
   category: "{url_parts[3]}"
-  sub_category: "{table_title}"
+  subCategory: "{table_title}"
   question: "{columns_values[0]}"
   answer: "{columns_values[1]}"
 

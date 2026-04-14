@@ -41,13 +41,13 @@ def test_run_sitemap_to_elastic_transforms_tutorial_url_and_sends_documents():
             "decompressor": "none",
             "parser": "html_tables",
             "title_tag": "h2",
-            "url": "https://www.example.com/tutorial/page1",
+            "location": "https://www.example.com/tutorial/page1",
         }
         mock_send.assert_called_once_with(
             [
                 {
                     "category": "tutorial",
-                    "sub_category": "FAQ",
+                    "subCategory": "FAQ",
                     "question": "Question?",
                     "answer": "Answer.",
                 }

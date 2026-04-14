@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: check-scrapping
-        image: vluciani/node-search-app:python-indexation-1.12
+        image: vluciani/node-search-app:python-indexation-1.16
         command: ["python", "elastic_setup/run_sample_query.py"]
         env:
         - name: ELASTICSEARCH_URL
